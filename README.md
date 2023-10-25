@@ -11,6 +11,12 @@ Learning Javascript/Typescript with phaser.
 
 see: https://vitejs.dev/guide/
 
+[Set subdirectory as website root](https://stackoverflow.com/questions/36782467/set-subdirectory-as-website-root-on-github-pages)
+
+https://vitejs.dev/guide/static-deploy.html
+
+[github-actions](https://github.com/sitek94/vite-deploy-demo)
+
 LICENSE:
 - Code: MIT or Apache2.0
 - Art: All rights reserved
