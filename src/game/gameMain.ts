@@ -28,6 +28,9 @@ function configureGame() : Phaser.Types.Core.GameConfig {
         width:  canvas_size_x,
         height: canvas_size_y,
         backgroundColor: '#fbf0e4',
+        scale: {
+            mode: Phaser.Scale.FIT
+        },
         physics: {
             default: 'arcade',
             arcade: {
