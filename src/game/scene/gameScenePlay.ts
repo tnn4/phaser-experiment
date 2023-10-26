@@ -40,11 +40,11 @@ class Scene_Playing extends Phaser.Scene {
 
         let imgW= 160;
         let imgH= 90;
-        scale = 4;
+        scale = 5;
         this.load.image(
             {
                 key: 'floor-wood',
-                url: `building/floor-wood-00.png`,
+                url: `building/floor-wood-00-${scale}x.png`,
                 frameConfig: {
                     frameWidth: imgW*scale,
                     frameHeight: imgH*scale
@@ -322,7 +322,7 @@ class Scene_Playing extends Phaser.Scene {
     }
 
     createFurniture() {
-        let anchorFX = this.canvas_size_x*(1/2);
+        let anchorFX = this.canvas_size_x*(1/4);
         let anchorFY = this.canvas_size_y*(1/2);
         
         // Furniture
