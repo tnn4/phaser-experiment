@@ -65,6 +65,23 @@ class Scene_Playing extends Phaser.Scene {
                     frameHeight: imgH*scale
                 }
             }
+        );
+
+        imgW = 32;
+        imgH = 32;
+        scale = 4;
+        this.load.spritesheet(
+            {
+                key: 'door',
+                url: `building/door-00-${scale}x.png`,
+                frameConfig: {
+                    frameWidth: imgW*scale,
+                    frameHeight: imgH*scale,
+                    startFrame: 0,
+                    endFrame: 1,
+                }
+            }
+
         )
 
     }
@@ -319,6 +336,24 @@ class Scene_Playing extends Phaser.Scene {
             anchorBX, anchorBY,
             'floor-wood'
         );
+
+        // Back Door
+        let backDoor = this.add.sprite(
+            anchorBX, anchorBY-80,
+            'door'
+        ).setInteractive();
+        backDoor.on('pointerover', () => {
+            backDoor.setFrame(1);
+            backDoor.setScale(1);
+        }).on('pointerout', () => {
+            backDoor.setFrame(0);
+            backDoor.setScale(1);
+        }).on('pointerdown', () => {
+            backDoor.setScale(0.8);
+        }).on('pointerup', () => {
+            backDoor.setScale(1);
+            this.scene.start(SCENE_POKEMON);
+        })
     }
 
     createFurniture() {
@@ -485,8 +520,8 @@ class Scene_Playing extends Phaser.Scene {
 
         // EXIT BUTTON
         let button_exit = this.add.sprite(
-            this.canvas_size_x*(7/8), 
-            this.canvas_size_y*(1/12), 
+            this.canvas_size_x*(1/2), 
+            this.canvas_size_y*(7/8), 
             'button_exit_ss'
         ).setInteractive();
         button_exit.on('pointerover', () => {
