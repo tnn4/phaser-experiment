@@ -17,6 +17,10 @@ https://vitejs.dev/guide/static-deploy.html
 
 [github-actions](https://github.com/sitek94/vite-deploy-demo)
 
+## Deployment troubleshooting
+
+[git repo says up to date after git pull but files are not](https://stackoverflow.com/questions/25411366/git-repo-says-its-up-to-date-after-pull-but-files-are-not-updated)
+
 LICENSE:
 - Code: MIT or Apache2.0
 - Art: All rights reserved

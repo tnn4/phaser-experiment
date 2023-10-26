@@ -4,6 +4,8 @@ import {DATA_PATH} from "../gameCommon.js";
 
 import * as Color from "../gameColors.js";
 
+import {game} from "../gameMain.ts";
+
 const SCENE_PAUSE='SCENE_PAUSE';
 const SCENE_POKEMON='SCENE_POKEMON';
 const SCENE_PLAY='SCENE_PLAY';
@@ -31,10 +33,72 @@ class Scene_Playing extends Phaser.Scene {
     }
     isPaused = false;
 
+    preloadBuilding() {
+        this.load.path=DATA_PATH;
+
+        let scale;
+
+        let imgW= 160;
+        let imgH= 90;
+        scale = 4;
+        this.load.image(
+            {
+                key: 'floor-wood',
+                url: `building/floor-wood-00.png`,
+                frameConfig: {
+                    frameWidth: imgW*scale,
+                    frameHeight: imgH*scale
+                }
+            }
+        );
+
+        // todo: add wall
+        imgW = 160;
+        imgH = 90;
+        scale = 5;
+        this.load.image(
+            {
+                key: 'wall',
+                url: `building/wall-00-${scale}x.png`,
+                frameConfig: {
+                    frameWidth: imgW*scale,
+                    frameHeight: imgH*scale
+                }
+            }
+        )
+
+    }
+
+    preloadFurniture() {
+        this.load.path=DATA_PATH;
+
+        let scale;
+
+        let ext;
+
+        let id = '01';
+        scale = 3;
+        ext = 'png';
+        let imgW= 128;
+        let imgH = 128;
+        this.load.image(
+            {
+                key: 'carpet',
+                url: `furniture/carpet-${id}-${scale}x.${ext}`,
+                frameConfig: {
+                    frameWidth: imgW*scale,
+                    frameHeight: imgH*scale,
+                }
+            }
+        );
+    }
+
     // fn()
     // LOAD data
     preload() {
-        
+        this.preloadBuilding();
+        this.preloadFurniture();
+
         this.load.path=DATA_PATH;
 
         let scale;
@@ -243,22 +307,30 @@ class Scene_Playing extends Phaser.Scene {
         console.log(`${this.sceneName} preloaded()`)
     }
 
-    // fn()
-    // CREATE OBJECTS
-    create() {
-        //let unit_size;
+    createBuilding() {
+        let anchorBX = this.canvas_size_x*(1/2);
+        let anchorBY = this.canvas_size_y*(1/2);
         
-        //let warning_text = 
-        this.add.text(
-            this.canvas_size_x*(7/8), this.canvas_size_y*(1/2),
-            "Use this on desktop or you're going to have a bad time.",
+        this.add.image(
+            anchorBX, anchorBY,
+            'wall'
         );
-        //this.Keys_Cursor = this.input.keyboard.createCursorKeys();
-        
+        this.add.image(
+            anchorBX, anchorBY,
+            'floor-wood'
+        );
+    }
+
+    createFurniture() {
         let anchorFX = this.canvas_size_x*(1/2);
         let anchorFY = this.canvas_size_y*(1/2);
+        
         // Furniture
         
+        this.add.image(
+            anchorFX, anchorFY+80,
+            'carpet'
+        );
         // chair
         this.add.sprite(
             anchorFX, anchorFY-100, 
@@ -271,6 +343,24 @@ class Scene_Playing extends Phaser.Scene {
         this.add.sprite(
             anchorFX, anchorFY-40, 
             'flower-pot');
+    }
+
+    // fn()
+    // CREATE OBJECTS
+    create() {
+        //let unit_size;
+        
+        game.scale.resize(this.canvas_size_x, this.canvas_size_y);
+
+        // Welcome
+        this.add.text(
+            this.canvas_size_x*(7/8), this.canvas_size_y*(11/12),
+            "Welcome",
+            {color: '#000000'}
+        );
+        //this.Keys_Cursor = this.input.keyboard.createCursorKeys();
+        this.createBuilding();
+        this.createFurniture();
 
         // Positioning data
         let anchorX = this.canvas_size_x*(1/12);
@@ -442,28 +532,7 @@ class Scene_Playing extends Phaser.Scene {
         // PAUSE_BUTTON END
 
 
-        // PAUSE TEXT BUTTON //
-        // [ II ]
-        // phaser 3 doesn't have built in buttons
-        // x -->, y --v
-        const button_pause = this.add.text(this.canvas_size_x*(7/8), this.canvas_size_y*(7/8), 'PAUSE [II]');
-        button_pause.setInteractive();
-        button_pause.on('pointerover', () => {
-            console.log('[BUTTON_PAUSE]: pointerover');
-        });
-        button_pause.on('pointerdown', () => {
-            this.scene.start(SCENE_PAUSE);
-            if (this.isPaused_Global === false) {
-                
-                this.isPaused_Global = true;
-                console.log("Game paused"); 
-            }
-            else if (this.isPaused_Global === true) {
 
-                this.isPaused_Global = false;
-                console.log('Game started');
-            }
-        })
 
         
 
@@ -472,8 +541,17 @@ class Scene_Playing extends Phaser.Scene {
 
     // Game Loop: https://phaser.io/phaser3/contributing/part7
     // RAF = request animation frame handler
-    
 
+    // params
+    // time = current time
+    // delta = delta time (ms) since last frame
+    /*
+    update(time: number, delta: number) {
+        //console.log(`SCENE_PLAY(time): ${time}`);
+        //console.log(`SCENE_PLAY(delta): ${delta}`);
+
+    }
+    */
 }
 
 export {Scene_Playing};
